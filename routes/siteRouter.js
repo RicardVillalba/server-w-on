@@ -8,9 +8,9 @@ const createError = require("http-errors");
 
   // Creates a client
   const client = new vision.ImageAnnotatorClient({
-    keyFilename: './image-recognition-277614-5dfb23593a56.json'
+    keyFilename: './imageRecognition/image-recognition-277614-5dfb23593a56.json'
   });
-   console.log("HOLA");
+   console.log("PUTABIDATETE");
   // Performs label detection on the image file
   client
   .labelDetection('./routes/img.jpg')
