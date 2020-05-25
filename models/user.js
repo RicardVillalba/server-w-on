@@ -6,8 +6,8 @@ const userSchema = new Schema(
     username: String,
     password: String,
     email: String,
-    tel: Number,
-    favorites: [{ type: ObjectId, ref: "Favorite" }],
+    tel: String,
+    favorites: [{ type: Schema.Types.ObjectId, ref: "Favorite" }],
     profilePicture: String,
   },
   {

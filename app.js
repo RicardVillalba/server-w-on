@@ -11,12 +11,13 @@ require('dotenv').config();
 
 const authRouter = require('./routes/authRouter');
 
-const siteRouter = require('./routes/siteRouter');
+const userRouter = require('./routes/userRouter');
 
+const favoritesRouter = require('./routes/favoritesRouter');
 
+const cloudinaryRouter = require('./routes/cloudinaryRouter');
 
-
-
+const cloudVisionRouter = require('./routes/cloudVisionRouter');
 
 
 //////////////////////////////////////////////////
@@ -67,6 +68,13 @@ app.use(
   }),
 );
 
+app.use(function (req, res, next) {
+  if (req.session.currentUser) {
+    res.locals.admin = req.session.currentUser
+  }
+  next();
+})
+
 // MIDDLEWARE
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -77,7 +85,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
-app.use('/site', siteRouter);
+app.use('/user', userRouter);
+app.use('/favorites', favoritesRouter);
+app.use('/cloudinary', cloudinaryRouter);
+app.use('/cloudvision', cloudVisionRouter);
 
 // ERROR HANDLING
 // catch 404 and forward to error handler
