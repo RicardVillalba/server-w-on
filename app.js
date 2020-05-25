@@ -41,7 +41,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
+    origin: [process.env.PUBLIC_DOMAIN, "https://w-on.herokuapp.com"],
   }),
 );
 // app.use((req, res, next) => {
@@ -89,6 +89,12 @@ app.use('/user', userRouter);
 app.use('/favorites', favoritesRouter);
 app.use('/cloudinary', cloudinaryRouter);
 app.use('/cloudvision', cloudVisionRouter);
+
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // ERROR HANDLING
 // catch 404 and forward to error handler
