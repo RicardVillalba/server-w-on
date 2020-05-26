@@ -7,6 +7,18 @@ const Favorite = require("../models/favorite");
 // HELPER FUNCTIONS
 const { isLoggedIn } = require("../helpers/middlewares");
 
+favoritesRouter.get("/image/:imageUrl", isLoggedIn, (req, res, next) => {
+  const {imageUrl} = req.params;
+  console.log("image",imageUrl)
+  Favorite.find({imageUrl})
+    .then((favoriteObj) => {
+      console.log("favoriteObj", favoriteObj);
+      res.status(200).json(favoriteObj[0]);
+    })
+    .catch((err) => next(createError(err)));
+});
+
+
 //GET/favorites/:id
 favoritesRouter.get("/:id", isLoggedIn, (req, res, next) => {
   const { id } = req.params;
@@ -20,8 +32,8 @@ favoritesRouter.get("/:id", isLoggedIn, (req, res, next) => {
 });
 //POST/favorites/:id
 favoritesRouter.post("/", isLoggedIn, (req, res, next) => {
-  const { imageUrl, season } = req.body;
-  const newFavorite = { imageUrl, season };
+  const { imageUrl } = req.body;
+  const newFavorite = { imageUrl };
 
   Favorite.create(newFavorite)
     .then((favoriteObj) => {
@@ -49,4 +61,6 @@ favoritesRouter.delete("/:id", isLoggedIn, (req, res, next) => {
     .then((updatedUser) => res.status(200).json(updatedUser))
     .catch((err) => next(createError(err)));
 });
+
+
 module.exports = favoritesRouter;
