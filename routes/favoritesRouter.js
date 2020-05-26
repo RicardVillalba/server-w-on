@@ -28,7 +28,10 @@ favoritesRouter.post("/", isLoggedIn, (req, res, next) => {
       console.log(favoriteObj, favoriteObj);
       return User.findByIdAndUpdate(req.session.currentUser._id, { $push: { favorites: favoriteObj._id } }, {new:true});
     })
-    .then((updatedUser) => res.status(200).json(updatedUser))
+    .then((updatedUser) =>{
+      req.session.currentUser = updatedUser;
+      res.status(200).json(updatedUser)
+    })
     .catch((err) => next(createError(err)));
 });
 //DELETE/favorites/:id
