@@ -61,3 +61,6 @@ typings/
 .next
 
 imageRecognition/
+
+# Exclude the json file with the keys
+.gpconfig.json
